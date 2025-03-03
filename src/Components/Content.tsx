@@ -90,7 +90,7 @@ const Content = (props: Props) => {
         // status: true,
       };
       const response = await axios.post(
-        "http://localhost:28017/registerwifi",
+        "http://35.160.120.126/registerwifi",
         payload
       );
       console.log(response.data);

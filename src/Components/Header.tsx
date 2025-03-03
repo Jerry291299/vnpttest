@@ -46,7 +46,7 @@ const Header = () => {
 
   const fetchUserProfile = async (id: string) => {
     try {
-      const response = await axios.get(`http://localhost:28017/user/${id}`);
+      const response = await axios.get(`http://35.160.120.126/user/${id}`);
       if (response.data) {
         const formattedDob = response.data.dob
           ? new Date(response.data.dob).toISOString().split("T")[0]
