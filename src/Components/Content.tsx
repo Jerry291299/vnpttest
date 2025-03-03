@@ -90,7 +90,7 @@ const Content = (props: Props) => {
         // status: true,
       };
       const response = await axios.post(
-        "http://35.160.120.126/registerwifi",
+        "https://fptbe.onrender.com/registerwifi",
         payload
       );
       console.log(response.data);

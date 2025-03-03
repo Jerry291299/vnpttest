@@ -37,7 +37,8 @@ export const getProductByID = async (id?: string) => {
 
 export const addProduct = async (payload: any) => {
   try {
-    const response = await axios.post("http://localhost:28017/product/add", payload);
+    // const response = await axios.post("http://localhost:28017/product/add", payload);
+    const response = await axios.post("https://fptbe.onrender.com/product/add", payload);
     return response.data; 
   } catch (error) {
     console.error("Error adding product:", error);
