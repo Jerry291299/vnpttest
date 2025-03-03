@@ -7,6 +7,7 @@ import step1 from "../img/step1.jpg";
 import step2 from "../img/step2.jpg";
 import step3 from "../img/step3.jpg";
 import banner from "../img/bannerfpt.webp"
+import bannerfooter from "../img/bannerfooter.png"
 import axios from "axios";
 
 type Props = {};
@@ -61,14 +62,18 @@ const Content = (props: Props) => {
     console.log("Internet + TV Products:", internetTVProducts);
   }, [internetProducts, internetTVProducts]);
 
-  const openModal = (product: Iproduct) => {
+  const openModal = (product: any) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
+    document.body.style.overflow = "hidden"; // Chặn cuộn nền
   };
-
+  
+  // Khi đóng modal, khôi phục scroll nền
   const closeModal = () => {
     setIsModalOpen(false);
+    document.body.style.overflow = "auto"; // Khôi phục cuộn nền
   };
+  
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -109,6 +114,7 @@ const Content = (props: Props) => {
   };
 
   return (
+    <>
     <div className="bg-gray-100 py-12">
       <div className="banner">
         <img src={banner} alt="" />
@@ -201,8 +207,14 @@ const Content = (props: Props) => {
   
     {/* Modal đăng ký */}
     {isModalOpen && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black/10 backdrop-blur-md p-4">
-    <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg max-w-lg sm:max-w-xl md:max-w-3xl w-full">
+  <div
+    className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-md p-4"
+    style={{ overflow: "hidden" }} // Chặn cuộn nền
+  >
+    <div
+      className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg max-w-lg sm:max-w-xl md:max-w-3xl w-full max-h-[90vh] overflow-y-auto relative z-50"
+      style={{ maxHeight: "90vh" }} // Giới hạn chiều cao modal
+    >
       {/* Hình ảnh */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-4">
         <img
@@ -310,12 +322,19 @@ const Content = (props: Props) => {
   </div>
 )}
 
-  
-    {/* Quy trình làm việc */}
-    <div className="py-12 bg-white text-center">
+<div className="bannerf py-[40px] sm:py-[60px] md:py-[90px]">
+  <img 
+    src={bannerfooter} 
+    alt="Banner Footer" 
+    className="w-full h-auto max-h-[300px] sm:max-h-[400px] md:max-h-[500px] object-cover" 
+  />
+</div>
+
+<div className="py-[30px]">
+    <div className="py-12 text-center">
       <h2 className="text-3xl font-bold text-black">QUY TRÌNH LÀM VIỆC</h2>
       <p className="text-xl text-orange-500 mt-2">ĐƠN GIẢN - NHANH CHÓNG</p>
-      <div className="mt-8 flex flex-col sm:flex-col md:flex-row justify-center gap-6">
+      <div className="mt-8 flex sm:flex-col md:flex-row justify-center gap-6">
         {[step1, step2, step3].map((step, index) => (
           <div key={index} className="relative bg-orange-500 rounded-xl overflow-hidden w-full max-w-sm shadow-lg">
             <img src={step} alt={`Bước ${index + 1}`} className="w-full h-56 object-cover opacity-60" />
@@ -327,7 +346,15 @@ const Content = (props: Props) => {
         ))}
       </div>
     </div>
+    </div>
+
+
+    
+   
+    
+
   </div>
+  </>
   );
 };
 
