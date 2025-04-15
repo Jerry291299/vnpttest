@@ -24,7 +24,7 @@ const HeaderBanner: React.FC = () => {
         <img
           src={banner1}
           alt="VNPT Banner"
-          className="w-full h-[300px] md:h-[500px] object-cover"
+          className="w-full h-[300px] md:h-[550px] object-cover"
         />
       </div>
 

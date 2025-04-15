@@ -380,7 +380,7 @@ const ProductList = () => {
         <img
           src={banner2}
           alt="Banner 2"
-          className="w-full h-[200px] sm:h-[600px] object-cover"
+          className="w-full "
         />
       </div>
 
