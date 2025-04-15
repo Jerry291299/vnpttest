@@ -1,185 +1,107 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
-import { FiSearch } from "react-icons/fi";
-import { Link, Navigate, useNavigate } from "react-router";
-import logo from "../img/FPT_Telecom_logo.svg";
-const Header = () => {
+// components/HeaderBanner.tsx
+import React from 'react';
+import logo from "../img/logo.png"
+import banner1 from "../img/banner-vnpt-1-20250219043809-p4bty.png"
+import banner2 from "../img/banner-vnpt-2-20250219043404-_b0mf.png"
+import ProductList from './product';
 
-  const [user, setUser] = useState<{
-    info: { role: string; name: string; email: string; id: string };
-    id: string;
-  } | null>(null);
-  const [profileData, setProfileData] = useState({
-    img: "",
-  });
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
-  const navigate = useNavigate();
+const HeaderBanner: React.FC = () => {
+  const plans1 = [
+    {
+      name: "HOME 2",
+      priceRural: "180.000đ",
+      priceUrban: "220.000đ",
+      download: "300Mbps",
+      upload: "300Mbps",
+      suitable: "Phù hợp cá nhân, gia đình nhỏ",
+    },
+    {
+      name: "HOME 3",
+      priceRural: "265.000đ",
+      priceUrban: "300.000đ",
+      download: "500Mbps",
+      upload: "500Mbps",
+      suitable: "Phù hợp gia đình vừa và lớn",
+    },
+    {
+      name: "HOME 4",
+      priceRural: "285.000đ",
+      priceUrban: "335.000đ",
+      download: "1.000Mbps",
+      upload: "1.000Mbps",
+      suitable: "Phù hợp stream, game, online",
+    },
+  ];
 
 
-
-  useEffect(() => {
-    const userData = sessionStorage.getItem("user");
-    if (userData) {
-      const parsedUser = JSON.parse(userData);
-      setUser(parsedUser);
-  
-      fetchUserProfile(parsedUser.id);
-    }
-  
-   
-  }, []);
-
-  const handleLogout = () => {
-    sessionStorage.removeItem("user");
-    setUser(null);
-    navigate("/");
-  };
-
-  const toggleSubMenu = () => {
-    setIsSubMenuOpen(!isSubMenuOpen);
-  };
-
-  
-
-  const fetchUserProfile = async (id: string) => {
-    try {
-      const response = await axios.get(`https://fptbe.onrender.com/user/${id}`);
-      if (response.data) {
-        const formattedDob = response.data.dob
-          ? new Date(response.data.dob).toISOString().split("T")[0]
-          : "";
-        setProfileData({
-          img: response.data.img || ""
-          
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching profile data:", error);
-    }
-  };
-  
   return (
-    <header className="w-full bg-white shadow-md">
-    {/* Top Nav */}
-    <div className="bg-blue-900 text-white text-sm flex justify-center py-2">
-      <span className="border-b border-white pb-1">Khách hàng cá nhân</span>
-    </div>
+    <div className="w-full">
+      {/* Top Info Line */}
+      <div className="flex items-center justify-center gap-8 bg-white py-2">
+  <img className="w-[50px]" src={logo} alt="VNPT logo" />
+  <div className="text-black font-semibold text-lg text-center">
+    Trang web cập nhật khuyến mãi mới nhất của VNPT Telecom
+  </div>
+</div>
+      
 
-    {/* Main Nav */}
-    <div className="flex items-center justify-between px-6 md:px-10 py-4">
-      {/* Logo */}
-      <div className="flex items-center">
-        <img src={logo} alt="FPT Telecom" className="h-10" />
+      {/* Banner Image with Overlay */}
+      <div className="relative w-full">
+        <img
+          src={banner1} // Replace this with actual path or import
+          alt="VNPT Banner"
+          className="w-full h-auto object-cover"
+        />
       </div>
 
-      {/* Navigation Links - Desktop */}
-      <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
-        <div className="cursor-pointer">Sản phẩm dịch vụ</div>
-        <div className="cursor-pointer">
-          <Link to={"https://zalo.me/0868904028"}>Liên hệ hỗ trợ</Link>
+      {/* Promo Section */}
+      <div className="bg-white text-center py-8 px-4">
+        <h3 className="text-2xl md:text-3xl font-bold text-black uppercase mb-6">
+          Khuyến mãi lắp mạng VNPT mới nhất tháng 03/2025
+        </h3>
+
+        <div className="space-y-2 text-base md:text-lg text-gray-700">
+          <p>
+            Gói combo wifi + Xem tivi giá chỉ từ{' '}
+            <span className="font-bold text-red-600">240.000Đ/Tháng</span>
+          </p>
+          <p>
+            Gói internet wifi tốc độ cao giá chỉ từ{' '}
+            <span className="font-bold text-red-600">180.000Đ/Tháng</span>
+          </p>
         </div>
-      </nav>
 
-      {/* Mobile Menu Button */}
-      <button
-        className="md:hidden text-gray-700 focus:outline-none"
-        onClick={toggleMobileMenu}
-      >
-        ☰
-      </button>
-
-      {/* Right Icons */}
-      <div className="hidden md:flex items-center space-x-4">
-        {user ? (
-          <div className="relative">
-            <div
-              className="flex items-center cursor-pointer border-2 border-black rounded-xl px-3 py-2"
-              onClick={toggleSubMenu}
-            >
-              <p className="ml-2 flex gap-2">{user.info.name}</p>
-            </div>
-            {isSubMenuOpen && (
-              <ul className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10">
-                {(user.info.role === "admin" || user.info.role === "shipper") && (
-                  <li className="hover:bg-gray-100">
-                    <Link
-                      to={user.info.role === "admin" ? "/admin/dashboard" : "/shipper"}
-                      className="block px-4 py-2"
-                      onClick={() => setIsSubMenuOpen(false)}
-                    >
-                      Quản trị
-                    </Link>
-                  </li>
-                )}
-                <li className="hover:bg-gray-100">
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setIsSubMenuOpen(false);
-                    }}
-                    className="block w-full text-left px-4 py-2"
-                  >
-                    Đăng xuất
-                  </button>
-                </li>
-              </ul>
-            )}
+        <div className="mt-6 space-y-4">
+          <div className="flex items-start justify-center gap-2">
+            <span className="text-orange-500 text-xl">🎁</span>
+            <p className="text-gray-700">
+              Trang bị modem <span className="font-bold text-red-600">WiFi 6</span> thế hệ mới nhất, nhanh nhất trị giá{' '}
+              <span className="font-bold text-red-600">2.500.000Đ</span>
+            </p>
           </div>
-        ) : (
-          <div className="flex gap-3">
-            <Link to={"/login"} className="text-gray-700">Đăng nhập</Link>
-            <Link to={"/register"} className="text-gray-700">Đăng ký</Link>
+          <div className="flex items-start justify-center gap-2">
+            <span className="text-orange-500 text-xl">🎁</span>
+            <p className="text-gray-700">
+              Tặng Box 4K xem tivi tích hợp điều khiển giọng nói trị giá{' '}
+              <span className="font-bold text-red-600">1.500.000Đ</span>
+            </p>
           </div>
-        )}
+          <div className="flex items-start justify-center gap-2">
+            <span className="text-orange-500 text-xl">🎁</span>
+            <p className="text-gray-700">Tặng thêm tháng cước dành cho khách hàng trả trước 12 tháng</p>
+          </div>
+          <div className="flex items-start justify-center gap-2">
+            <span className="text-orange-500 text-xl">🎁</span>
+            <p className="text-gray-700">Lắp đặt nhanh tại nhà, làm việc cả thứ 7 và chủ nhật</p>
+          </div>
+        </div>
       </div>
+
+      {/* Plans Section */}
+      <ProductList/>
+
     </div>
-
-    {/* Mobile Menu */}
-    {isMobileMenuOpen && (
-      <div className="md:hidden bg-white shadow-md px-6 py-4">
-        <nav className="flex flex-col space-y-4 text-gray-700">
-          <div className="cursor-pointer">Sản phẩm dịch vụ</div>
-          <div className="cursor-pointer">
-            <Link to={"https://zalo.me/0868904028"}>Liên hệ hỗ trợ</Link>
-          </div>
-          {user ? (
-            <>
-              <div className="border-t pt-4">
-                <p className="font-semibold">{user.info.name}</p>
-                {(user.info.role === "admin" || user.info.role === "shipper") && (
-                  <Link
-                    to={user.info.role === "admin" ? "/admin/dashboard" : "/shipper"}
-                    className="block text-gray-700 mt-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Quản trị
-                  </Link>
-                )}
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="block text-red-500 mt-2"
-                >
-                  Đăng xuất
-                </button>
-              </div>
-            </>
-          ) : (
-            <div className="flex flex-col gap-2">
-              <Link to={"/login"} className="text-gray-700">Đăng nhập</Link>
-              <Link to={"/register"} className="text-gray-700">Đăng ký</Link>
-            </div>
-          )}
-        </nav>
-      </div>
-    )}
-  </header>
   );
 };
 
-export default Header;
+export default HeaderBanner;
