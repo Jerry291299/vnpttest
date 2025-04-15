@@ -1,7 +1,6 @@
 import React from "react";
 import logo from "../img/logo.png";
 import banner1 from "../img/banner-vnpt-1-20250219043809-p4bty.png";
-import banner2 from "../img/banner-vnpt-2-20250219043404-_b0mf.png";
 import ProductList from "./product";
 
 const HeaderBanner: React.FC = () => {
