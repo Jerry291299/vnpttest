@@ -124,52 +124,52 @@ const ProductList = () => {
   ];
 
   return (
-    <div className="w-full py-6 md:py-8">
+    <div className="w-full py-4 sm:py-6 md:py-8">
       {/* Section 1: WiFi Plans */}
-      <div className="text py-6 md:py-8 border-t-2 border-dotted border-gray-300">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center">
+      <div className="text py-4 sm:py-6 md:py-8 border-t-2 border-dotted border-gray-300">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center">
           1. Báo giá các gói wifi VNPT giá rẻ tốc độ cao
         </h1>
-        <p className="text-sm sm:text-base lg:text-lg text-center px-4 sm:px-6 mt-4 max-w-3xl mx-auto">
+        <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center px-4 sm:px-6 md:px-8 mt-3 sm:mt-4 max-w-4xl mx-auto">
           VNPT mang đến cho quý khách hàng là cá nhân, gia đình những gói
           internet wifi tốc độ cao, giá thành phải chăng phù hợp với nhu cầu sử
           dụng từ cơ bản đến nâng cao.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 px-2 sm:px-6 lg:px-80">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
         {products1.map((product, index) => (
           <div
             key={index}
-            className="relative w-full max-w-[320px] mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200"
+            className="relative w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200"
           >
             {/* Sale Badge */}
             <div className="absolute top-0 left-0">
-              <div className="relative w-14 sm:w-16 bg-blue-700 text-white text-center pt-1 sm:pt-2 pb-6 sm:pb-8">
-                <div className="text-sm sm:text-lg font-bold leading-tight">
+              <div className="relative w-12 sm:w-14 md:w-16 bg-blue-700 text-white text-center pt-1 sm:pt-2 pb-5 sm:pb-6 md:pb-8">
+                <div className="text-xs sm:text-sm md:text-lg font-bold leading-tight">
                   SALE
                 </div>
-                <div className="text-sm sm:text-lg font-bold leading-tight mt-1 sm:mt-2">
+                <div className="text-xs sm:text-sm md:text-lg font-bold leading-tight mt-1 sm:mt-2">
                   50%
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 mx-auto w-0 h-0 border-l-[28px] sm:border-l-[32px] border-l-transparent border-r-[28px] sm:border-r-[32px] border-r-transparent border-b-[12px] sm:border-b-[16px] border-b-white"></div>
+                <div className="absolute bottom-0 left-0 right-0 mx-auto w-0 h-0 border-l-[24px] sm:border-l-[28px] md:border-l-[32px] border-l-transparent border-r-[24px] sm:border-r-[28px] md:border-r-[32px] border-r-transparent border-b-[10px] sm:border-b-[12px] md:border-b-[16px] border-b-white"></div>
               </div>
             </div>
 
             {/* Product Info */}
-            <div className="pt-16 sm:pt-20 px-4 sm:px-6 pb-6 text-center">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-900 mb-4 sm:mb-5">
+            <div className="pt-14 sm:pt-16 md:pt-20 px-4 sm:px-6 pb-6 text-center">
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-900 mb-3 sm:mb-4 md:mb-5">
                 {product.name}
               </h3>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-red-500 mb-1 sm:mb-2">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-1 sm:mb-2">
                 {product.price1}{" "}
                 <span className="text-black text-xs sm:text-sm">(huyện)</span>
               </p>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-red-500 mb-3 sm:mb-4">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-2 sm:mb-3 md:mb-4">
                 {product.price2}{" "}
                 <span className="text-black text-xs sm:text-sm">(quận)</span>
               </p>
-              <ul className="space-y-2 text-gray-700 text-xs sm:text-sm lg:text-base">
+              <ul className="space-y-1 sm:space-y-2 text-gray-700 text-xs sm:text-sm md:text-base">
                 <li className="flex items-center justify-center">
                   <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
                   Download tối đa {product.downloadSpeed}
@@ -198,7 +198,7 @@ const ProductList = () => {
             </div>
 
             {/* Wave Background and Contact Info */}
-            <div className="relative h-20 sm:h-24">
+            <div className="relative h-16 sm:h-20 md:h-24">
               <svg
                 className="absolute bottom-0 left-0 w-full h-full"
                 viewBox="0 0 1440 320"
@@ -211,7 +211,7 @@ const ProductList = () => {
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-white font-bold text-sm sm:text-lg bg-blue-600 px-2 sm:px-3 py-1 sm:py-2 rounded-full">
+                <p className="text-white font-bold text-xs sm:text-sm md:text-lg bg-blue-600 px-2 sm:px-3 py-1 sm:py-2 rounded-full">
                   {product.contact}
                 </p>
               </div>
@@ -221,7 +221,7 @@ const ProductList = () => {
       </div>
 
       {/* Promotional Note */}
-      <p className="text-sm sm:text-base lg:text-lg text-center px-4 sm:px-6 mt-6 max-w-3xl mx-auto">
+      <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center px-4 sm:px-6 md:px-8 mt-4 sm:mt-6 max-w-4xl mx-auto">
         <span className="text-red-600 font-bold">Chú ý :</span> giá mạng VNPT
         trên đã gồm 10% VAT và có thể thay đổi theo từng khu vực khác nhau như :
         tỉnh, chung cư... <br />
@@ -233,72 +233,72 @@ const ProductList = () => {
       <div className="flex w-full justify-center items-center space-x-2 sm:space-x-3 py-3 sm:py-4">
         <a
           href="https://zalo.me/0818122111"
-          className="flex items-center bg-white rounded-full shadow-lg border-2 sm:border-4 border-blue-300 px-4 sm:px-6 py-2 sm:py-4"
+          className="flex items-center bg-white rounded-full shadow-lg border-2 sm:border-4 border-blue-300 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4"
         >
           <img
             src={zalo}
             alt="Zalo"
-            className="w-10 h-10 sm:w-14 sm:h-14 mr-2 sm:mr-3"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 mr-2 sm:mr-3"
           />
-          <span className="text-red-600 font-bold text-lg sm:text-2xl">
+          <span className="text-red-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
             0818.122.111
           </span>
         </a>
       </div>
 
       {/* Banner */}
-      <div className="banner w-full py-4 sm:py-5">
+      <div className="banner w-full py-3 sm:py-4 md:py-5">
         <img
           src={banner}
           alt="Banner"
-          className="w-full h-[200px] sm:h-[600px] object-cover"
+          className="w-full max-w-screen-2xl mx-auto min-h-[150px] sm:min-h-[200px] md:min-h-[300px] lg:min-h-[400px] max-h-[600px] object-cover"
         />
       </div>
 
       {/* Section 2: Combo Plans */}
-      <div className="text py-6 md:py-8 border-t-2 border-dotted border-gray-300">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center">
+      <div className="text py-4 sm:py-6 md:py-8 border-t-2 border-dotted border-gray-300">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center">
           2. Báo giá các gói combo internet và truyền hình MyTV
         </h1>
-        <p className="text-sm sm:text-base lg:text-lg text-center px-4 sm:px-6 mt-4 max-w-3xl mx-auto">
+        <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center px-4 sm:px-6 md:px-8 mt-3 sm:mt-4 max-w-4xl mx-auto">
           Đăng ký 1 mà được tận 2 dịch vụ chất lượng của VNPT là mạng wifi tốc
           độ cao và truyền hình MyTV thông minh.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 px-2 sm:px-6 lg:px-80">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
         {products2.map((product, index) => (
           <div
             key={index}
-            className="relative w-full max-w-[320px] mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200"
+            className="relative w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200"
           >
             {/* Sale Badge */}
             <div className="absolute top-0 left-0">
-              <div className="relative w-14 sm:w-16 bg-blue-700 text-white text-center pt-1 sm:pt-2 pb-6 sm:pb-8">
-                <div className="text-sm sm:text-lg font-bold leading-tight">
+              <div className="relative w-12 sm:w-14 md:w-16 bg-blue-700 text-white text-center pt-1 sm:pt-2 pb-5 sm:pb-6 md:pb-8">
+                <div className="text-xs sm:text-sm md:text-lg font-bold leading-tight">
                   SALE
                 </div>
-                <div className="text-sm sm:text-lg font-bold leading-tight mt-1 sm:mt-2">
+                <div className="text-xs sm:text-sm md:text-lg font-bold leading-tight mt-1 sm:mt-2">
                   50%
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 mx-auto w-0 h-0 border-l-[28px] sm:border-l-[32px] border-l-transparent border-r-[28px] sm:border-r-[32px] border-r-transparent border-b-[12px] sm:border-b-[16px] border-b-white"></div>
+                <div className="absolute bottom-0 left-0 right-0 mx-auto w-0 h-0 border-l-[24px] sm:border-l-[28px] md:border-l-[32px] border-l-transparent border-r-[24px] sm:border-r-[28px] md:border-r-[32px] border-r-transparent border-b-[10px] sm:border-b-[12px] md:border-b-[16px] border-b-white"></div>
               </div>
             </div>
 
             {/* Product Info */}
-            <div className="pt-16 sm:pt-20 px-4 sm:px-6 pb-6 text-center">
-              <h3 className="text-2xl sm:text-3xl lg:text-3xl pt-[30px] font-bold text-blue-900 mb-4 sm:mb-5">
+            <div className="pt-14 sm:pt-16 md:pt-20 px-4 sm:px-6 pb-6 text-center">
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-900 mb-3 sm:mb-4 md:mb-5">
                 {product.name}
               </h3>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-red-500 mb-1 sm:mb-2">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-1 sm:mb-2">
                 {product.price1}{" "}
                 <span className="text-black text-xs sm:text-sm">(huyện)</span>
               </p>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-red-500 mb-3 sm:mb-4">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-2 sm:mb-3 md:mb-4">
                 {product.price2}{" "}
                 <span className="text-black text-xs sm:text-sm">(quận)</span>
               </p>
-              <ul className="space-y-2 text-gray-700 text-xs sm:text-sm lg:text-base">
+              <ul className="space-y-1 sm:space-y-2 text-gray-700 text-xs sm:text-sm md:text-base">
                 <li className="flex items-center justify-center">
                   <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
                   Download tối đa {product.downloadSpeed}
@@ -327,7 +327,7 @@ const ProductList = () => {
             </div>
 
             {/* Wave Background and Contact Info */}
-            <div className="relative h-20 sm:h-24">
+            <div className="relative h-16 sm:h-20 md:h-24">
               <svg
                 className="absolute bottom-0 left-0 w-full h-full"
                 viewBox="0 0 1440 320"
@@ -340,7 +340,7 @@ const ProductList = () => {
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-white font-bold text-sm sm:text-lg bg-blue-600 px-2 sm:px-3 py-1 sm:py-2 rounded-full">
+                <p className="text-white font-bold text-xs sm:text-sm md:text-lg bg-blue-600 px-2 sm:px-3 py-1 sm:py-2 rounded-full">
                   {product.contact}
                 </p>
               </div>
@@ -350,7 +350,7 @@ const ProductList = () => {
       </div>
 
       {/* Promotional Note */}
-      <p className="text-sm sm:text-base lg:text-lg text-center px-4 sm:px-6 mt-6 max-w-3xl mx-auto">
+      <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center px-4 sm:px-6 md:px-8 mt-4 sm:mt-6 max-w-4xl mx-auto">
         <span className="text-red-600 font-bold">Chú ý :</span> giá mạng VNPT
         trên đã gồm 10% VAT và có thể thay đổi theo từng khu vực khác nhau như :
         tỉnh, chung cư... <br />
@@ -362,67 +362,67 @@ const ProductList = () => {
       <div className="flex w-full justify-center items-center space-x-2 sm:space-x-3 py-3 sm:py-4">
         <a
           href="https://zalo.me/0818122111"
-          className="flex items-center bg-white rounded-full shadow-lg border-2 sm:border-4 border-blue-300 px-4 sm:px-6 py-2 sm:py-4"
+          className="flex items-center bg-white rounded-full shadow-lg border-2 sm:border-4 border-blue-300 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4"
         >
           <img
             src={zalo}
             alt="Zalo"
-            className="w-10 h-10 sm:w-14 sm:h-14 mr-2 sm:mr-3"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 mr-2 sm:mr-3"
           />
-          <span className="text-red-600 font-bold text-lg sm:text-2xl">
+          <span className="text-red-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
             0818.122.111
           </span>
         </a>
       </div>
 
       {/* Banner 2 */}
-      <div className="flex justify-center w-full py-4 sm:py-8">
+      <div className="flex justify-center w-full py-3 sm:py-4 md:py-6 lg:py-8">
         <img
           src={banner2}
           alt="Banner 2"
-          className="w-full "
+          className="w-full max-w-screen-2xl mx-auto min-h-[150px] sm:min-h-[200px] md:min-h-[300px] lg:min-h-[400px] max-h-[600px] object-contain"
         />
       </div>
 
       {/* Section 3: Enterprise Plans */}
-      <div className="text py-6 md:py-8 border-t-2 border-dotted border-gray-300">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center">
+      <div className="text py-4 sm:py-6 md:py-8 border-t-2 border-dotted border-gray-300">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center">
           3. Báo giá các gói cáp quang VNPT dành cho công ty, doanh nghiệp
         </h1>
-        <p className="text-sm sm:text-base lg:text-lg text-center px-4 sm:px-6 mt-4 max-w-3xl mx-auto">
+        <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center px-4 sm:px-6 md:px-8 mt-3 sm:mt-4 max-w-4xl mx-auto">
           VNPT xin trân trọng gửi đến quý khách hàng là công ty các gói mạng
           internet cáp quang nhanh nhất, ổn định nhất hiện nay.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 px-2 sm:px-6 lg:px-80">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
         {products3.map((product, index) => (
           <div
             key={index}
-            className="relative w-full max-w-[320px] mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200"
+            className="relative w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200"
           >
             {/* Sale Badge */}
             <div className="absolute top-0 left-0">
-              <div className="relative w-14 sm:w-16 bg-blue-700 text-white text-center pt-1 sm:pt-2 pb-6 sm:pb-8">
-                <div className="text-sm sm:text-lg font-bold leading-tight">
+              <div className="relative w-12 sm:w-14 md:w-16 bg-blue-700 text-white text-center pt-1 sm:pt-2 pb-5 sm:pb-6 md:pb-8">
+                <div className="text-xs sm:text-sm md:text-lg font-bold leading-tight">
                   SALE
                 </div>
-                <div className="text-sm sm:text-lg font-bold leading-tight mt-1 sm:mt-2">
+                <div className="text-xs sm:text-sm md:text-lg font-bold leading-tight mt-1 sm:mt-2">
                   50%
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 mx-auto w-0 h-0 border-l-[28px] sm:border-l-[32px] border-l-transparent border-r-[28px] sm:border-r-[32px] border-r-transparent border-b-[12px] sm:border-b-[16px] border-b-white"></div>
+                <div className="absolute bottom-0 left-0 right-0 mx-auto w-0 h-0 border-l-[24px] sm:border-l-[28px] md:border-l-[32px] border-l-transparent border-r-[24px] sm:border-r-[28px] md:border-r-[32px] border-r-transparent border-b-[10px] sm:border-b-[12px] md:border-b-[16px] border-b-white"></div>
               </div>
             </div>
 
             {/* Product Info */}
-            <div className="pt-16 sm:pt-20 px-4 sm:px-6 pb-6 text-center">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-900 mb-4 sm:mb-5">
+            <div className="pt-14 sm:pt-16 md:pt-20 px-4 sm:px-6 pb-6 text-center">
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-900 mb-3 sm:mb-4 md:mb-5">
                 {product.name}
               </h3>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-red-500 mb-3 sm:mb-4">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-2 sm:mb-3 md:mb-4">
                 {product.price1}
               </p>
-              <ul className="space-y-2 text-gray-700 text-xs sm:text-sm lg:text-base">
+              <ul className="space-y-1 sm:space-y-2 text-gray-700 text-xs sm:text-sm md:text-base">
                 <li className="flex items-center justify-center">
                   <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
                   Download tối đa {product.downloadSpeed}
@@ -451,7 +451,7 @@ const ProductList = () => {
             </div>
 
             {/* Wave Background and Contact Info */}
-            <div className="relative h-20 sm:h-24">
+            <div className="relative h-16 sm:h-20 md:h-24">
               <svg
                 className="absolute bottom-0 left-0 w-full h-full"
                 viewBox="0 0 1440 320"
@@ -464,7 +464,7 @@ const ProductList = () => {
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-white font-bold text-sm sm:text-lg bg-blue-600 px-2 sm:px-3 py-1 sm:py-2 rounded-full">
+                <p className="text-white font-bold text-xs sm:text-sm md:text-lg bg-blue-600 px-2 sm:px-3 py-1 sm:py-2 rounded-full">
                   {product.contact}
                 </p>
               </div>
@@ -477,60 +477,60 @@ const ProductList = () => {
       <div className="flex w-full justify-center items-center space-x-2 sm:space-x-3 py-3 sm:py-4">
         <a
           href="https://zalo.me/0818122111"
-          className="flex items-center bg-white rounded-full shadow-lg border-2 sm:border-4 border-blue-300 px-4 sm:px-6 py-2 sm:py-4"
+          className="flex items-center bg-white rounded-full shadow-lg border-2 sm:border-4 border-blue-300 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4"
         >
           <img
             src={zalo}
             alt="Zalo"
-            className="w-10 h-10 sm:w-14 sm:h-14 mr-2 sm:mr-3"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 mr-2 sm:mr-3"
           />
-          <span className="text-red-600 font-bold text-lg sm:text-2xl">
+          <span className="text-red-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
             0818.122.111
           </span>
         </a>
       </div>
 
       {/* Banner 3 */}
-      <div className="banner w-full py-4 sm:py-5">
+      <div className="banner w-full py-3 sm:py-4 md:py-5">
         <img
           src={banner3}
           alt="Banner 3"
-          className="w-full h-[200px] sm:h-[600px] object-cover"
+          className="w-full max-w-screen-2xl mx-auto min-h-[150px] sm:min-h-[200px] md:min-h-[300px] lg:min-h-[400px] max-h-[600px] object-cover"
         />
       </div>
 
       {/* Customer Service Images */}
-      <div className="bg-white px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
-        <div className="flex items-center mb-4">
-          <div className="w-1 h-5 sm:h-6 bg-blue-600 mr-2"></div>
-          <h2 className="text-base sm:text-lg md:text-xl font-semibold text-[#002c5f]">
+      <div className="bg-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-4 sm:py-6 max-w-screen-2xl mx-auto">
+        <div className="flex items-center mb-3 sm:mb-4">
+          <div className="w-1 h-4 sm:h-5 md:h-6 bg-blue-600 mr-2"></div>
+          <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-[#002c5f]">
             Hình ảnh lắp đặt và chăm sóc khách hàng của VNPT
           </h2>
         </div>
 
-        <div className="w-full mb-4">
+        <div className="w-full mb-3 sm:mb-4">
           <img
             src={cskh1}
             alt="VNPT Customer Service"
-            className="w-full h-[200px] sm:h-[240px] md:h-[300px] object-cover rounded shadow-md"
+            className="w-full max-w-full min-h-[150px] sm:min-h-[180px] md:min-h-[200px] lg:min-h-[240px] max-h-[300px] object-cover rounded shadow-md"
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           <img
             src={cskh3}
             alt="Install 1"
-            className="w-full h-[150px] sm:h-[200px] object-cover rounded shadow"
+            className="w-full max-w-full min-h-[120px] sm:min-h-[150px] md:min-h-[180px] max-h-[200px] object-cover rounded shadow"
           />
           <img
             src={cskh2}
             alt="Call center"
-            className="w-full h-[150px] sm:h-[200px] object-cover rounded shadow"
+            className="w-full max-w-full min-h-[120px] sm:min-h-[150px] md:min-h-[180px] max-h-[200px] object-cover rounded shadow"
           />
           <img
             src={cskh4}
             alt="Install 2"
-            className="w-full h-[150px] sm:h-[200px] object-cover rounded shadow"
+            className="w-full max-w-full min-h-[120px] sm:min-h-[150px] md:min-h-[180px] max-h-[200px] object-cover rounded shadow"
           />
         </div>
       </div>
@@ -540,14 +540,14 @@ const ProductList = () => {
         href="https://zalo.me/0818122111"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-3 sm:bottom-4 right-3 sm:right-4 flex items-center bg-white border-2 sm:border-4 border-[#002c5f] rounded-full shadow-lg px-2 sm:px-3 py-1 sm:py-2 z-50 animate-float"
+        className="fixed bottom-2 sm:bottom-3 md:bottom-4 right-2 sm:right-3 md:right-4 flex items-center bg-white border-2 sm:border-3 md:border-4 border-[#002c5f] rounded-full shadow-lg px-2 sm:px-3 py-1 sm:py-2 z-50 animate-float"
       >
         <img
           src={zalo}
           alt="Zalo"
-          className="w-8 h-8 sm:w-10 sm:h-10 mr-1 sm:mr-2"
+          className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 mr-1 sm:mr-2"
         />
-        <span className="text-red-600 font-bold text-sm sm:text-base">
+        <span className="text-red-600 font-bold text-xs sm:text-sm md:text-base">
           0818.122.111
         </span>
       </a>
