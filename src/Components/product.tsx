@@ -7,6 +7,9 @@ import cskh2 from "../img/download.png";
 import cskh3 from "../img/vnpt-anh-lap-dat-1-20250219135917-c4iia.png";
 import cskh4 from "../img/vnpt-anh-lap-dat-2-20250219135811-2z0a6.png";
 import zalo from "../img/Icon_of_Zalo.svg.png";
+import banner1 from "../img/banner-vnpt-1-20250219043809-p4bty.png";
+
+import HeaderBanner from "./Header";
 
 const ProductList = () => {
   const products1 = [
@@ -124,7 +127,68 @@ const ProductList = () => {
   ];
 
   return (
-    <div className="w-full py-4 sm:py-6 md:py-8">
+    <>
+    
+      {/* Banner Image with Overlay */}
+      <div className="relative w-full">
+        <img
+          src={banner1}
+          alt="VNPT Banner"
+          className="w-full object-cover"
+        />
+      </div>
+
+      {/* Promo Section */}
+      <div className="bg-white text-center py-2 sm:py-4 md:py-6 lg:py-8 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 max-w-screen-2xl mx-auto">
+        <h3 className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-bold text-black uppercase mb-1 sm:mb-2 md:mb-3 lg:mb-4 xl:mb-6">
+          Khuyến mãi lắp mạng VNPT mới nhất tháng 03/2025
+        </h3>
+
+        <div className="space-y-1 sm:space-y-2 md:space-y-3 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-gray-700">
+          <p>
+            Gói combo wifi + Xem tivi giá chỉ từ{" "}
+            <span className="font-bold text-red-600">240.000Đ/Tháng</span>
+          </p>
+          <p>
+            Gói internet wifi tốc độ cao giá chỉ từ{" "}
+            <span className="font-bold text-red-600">180.000Đ/Tháng</span>
+          </p>
+        </div>
+
+        <div className="mt-1 sm:mt-2 md:mt-3 lg:mt-4 xl:mt-6 space-y-1 sm:space-y-2 md:space-y-3 lg:space-y-4">
+          <div className="flex items-start justify-center gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+            <span className="text-orange-500 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">🎁</span>
+            <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+              Trang bị modem{" "}
+              <span className="font-bold text-red-600">WiFi 6</span> thế hệ mới
+              nhất, nhanh nhất trị giá{" "}
+              <span className="font-bold text-red-600">2.500.000Đ</span>
+            </p>
+          </div>
+          <div className="flex items-start justify-center gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+            <span className="text-orange-500 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">🎁</span>
+            <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+              Tặng Box 4K xem tivi tích hợp điều khiển giọng nói trị giá{" "}
+              <span className="font-bold text-red-600">1.500.000Đ</span>
+            </p>
+          </div>
+          <div className="flex items-start justify-center gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+            <span className="text-orange-500 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">🎁</span>
+            <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+              Tặng thêm tháng cước dành cho khách hàng trả trước 12 tháng
+            </p>
+          </div>
+          <div className="flex items-start justify-center gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+            <span className="text-orange-500 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">🎁</span>
+            <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+              Lắp đặt nhanh tại nhà, làm việc cả thứ 7 và chủ nhật
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Plans Section */}
+    <div className="px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 max-w-screen-2xl mx-auto">
       {/* Section 1: WiFi Plans */}
       <div className="text py-4 sm:py-6 md:py-8 border-t-2 border-dotted border-gray-300">
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center">
@@ -552,6 +616,7 @@ const ProductList = () => {
         </span>
       </a>
     </div>
+    </>
   );
 };
 
