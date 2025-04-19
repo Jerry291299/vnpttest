@@ -36,8 +36,8 @@ function NavItem({ icon, label, hasDropdown = false, dropdownItems, isTopNav = f
     }
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    if (hasDropdown && isMobile) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLDivElement, MouseEvent>) => {
+    if (hasDropdown) {
       e.preventDefault(); // Prevent navigation when toggling dropdown
       e.stopPropagation(); // Prevent onClick from closing the menu
       setIsDropdownOpen(!isDropdownOpen);
@@ -68,28 +68,45 @@ function NavItem({ icon, label, hasDropdown = false, dropdownItems, isTopNav = f
     >
       {isTopNav ? (
         <div className="flex flex-col w-full">
-          <NavLink
-            to={to || "#"}
-            className={({ isActive }) =>
-              `flex ${isMobile ? 'flex-row items-center justify-between py-3 px-4 text-base' : 'flex-col items-center px-1 sm:px-2 md:px-3 lg:px-4'} font-bold font-sans text-black hover:text-gray-700 ${isActive ? 'text-gray-700' : ''}`
-            }
-            onClick={handleClick}
-          >
-            {/* Icon beside the label in mobile, above in desktop */}
-            {icon && (
-              <span className={`text-black ${isMobile ? 'mr-3 w-6 h-6' : 'mb-1 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8'}`}>
-                {icon}
+          {hasDropdown ? (
+            // For items with dropdown, use a div instead of NavLink to prevent navigation
+            <div
+              className={`flex ${isMobile ? 'flex-row items-center justify-between py-3 px-4 text-base' : 'flex-col items-center px-1 sm:px-2 md:px-3 lg:px-4'} font-bold font-sans text-black hover:text-gray-700 cursor-pointer`}
+              onClick={handleClick}
+            >
+              {icon && (
+                <span className={`text-black ${isMobile ? 'mr-3 w-6 h-6' : 'mb-1 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8'}`}>
+                  {icon}
+                </span>
+              )}
+              <span className={`flex-1 ${isMobile ? 'text-base' : 'text-[10px] sm:text-xs md:text-sm lg:text-base text-center'}`}>
+                {label}
               </span>
-            )}
-            <span className={`flex-1 ${isMobile ? 'text-base' : 'text-[10px] sm:text-xs md:text-sm lg:text-base text-center'}`}>
-              {label}
-            </span>
-            {hasDropdown && isMobile && (
-              <span className="ml-1 text-black">
-                {isDropdownOpen ? '▲' : '▼'}
+              {hasDropdown && isMobile && (
+                <span className="ml-1 text-black">
+                  {isDropdownOpen ? '▲' : '▼'}
+                </span>
+              )}
+            </div>
+          ) : (
+            // For items without dropdown, use NavLink as before
+            <NavLink
+              to={to || "#"}
+              className={({ isActive }) =>
+                `flex ${isMobile ? 'flex-row items-center justify-between py-3 px-4 text-base' : 'flex-col items-center px-1 sm:px-2 md:px-3 lg:px-4'} font-bold font-sans text-black hover:text-gray-700 ${isActive ? 'text-gray-700' : ''}`
+              }
+              onClick={handleClick}
+            >
+              {icon && (
+                <span className={`text-black ${isMobile ? 'mr-3 w-6 h-6' : 'mb-1 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8'}`}>
+                  {icon}
+                </span>
+              )}
+              <span className={`flex-1 ${isMobile ? 'text-base' : 'text-[10px] sm:text-xs md:text-sm lg:text-base text-center'}`}>
+                {label}
               </span>
-            )}
-          </NavLink>
+            </NavLink>
+          )}
           {hasDropdown && isDropdownOpen && dropdownItems && (
             <div
               className={`${isMobile ? 'w-full pl-8 bg-gray-50' : 'absolute top-full w-48 bg-white shadow-lg rounded-md py-2 z-10'} text-gray-600`}
@@ -172,7 +189,7 @@ const HeaderBanner = () => {
             dropdownItems={dropdownItems}
             isTopNav={true}
             isMobile={false}
-            to="/"
+            // Removed 'to' prop to prevent navigation
           />
           <NavItem
             label="TIN TỨC"
@@ -235,7 +252,7 @@ const HeaderBanner = () => {
                 dropdownItems={dropdownItems}
                 isTopNav={true}
                 isMobile={true}
-                to="/"
+                // Removed 'to' prop to prevent navigation
                 onClick={toggleMenu}
               />
               <NavItem
@@ -251,7 +268,7 @@ const HeaderBanner = () => {
                 icon={<HelpCircle />}
                 isTopNav={true}
                 isMobile={true}
-                to="/ve-vnpt"
+                to="/vnpt"
                 onClick={toggleMenu}
               />
             </div>

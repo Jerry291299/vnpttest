@@ -19,7 +19,7 @@ const about = (props: Props) => {
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-white uppercase tracking-wide font-sans">
+            <h1 className="text-md sm:text-xl md:text-2xl font-bold text-white uppercase tracking-wide font-sans">
             Home » Giới thiệu về Mạng VNPT Telecom
             </h1>
           </div>
