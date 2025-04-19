@@ -9,7 +9,7 @@ import cskh4 from "../img/vnpt-anh-lap-dat-2-20250219135811-2z0a6.png";
 import zalo from "../img/Icon_of_Zalo.svg.png";
 import banner1 from "../img/banner-vnpt-1-20250219043809-p4bty.png";
 
-import HeaderBanner from "./Header";
+
 
 const ProductList = () => {
   const products1 = [
