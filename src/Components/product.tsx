@@ -351,7 +351,7 @@ const ProductList = () => {
 
             {/* Product Info */}
             <div className="pt-14 sm:pt-16 md:pt-20 px-4 sm:px-6 pb-6 text-center">
-              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-900 mb-3 sm:mb-4 md:mb-5">
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl lg:pt-4 font-bold text-blue-900 mb-3 sm:mb-4 md:mb-5">
                 {product.name}
               </h3>
               <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-1 sm:mb-2">

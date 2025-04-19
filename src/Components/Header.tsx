@@ -133,7 +133,7 @@ const HeaderBanner = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full border-1 border-gray-200 bg-white shadow-md z-50 mt-[10px]">
       {/* Top Info Line */}
       <div className="bg-white flex flex-col sm:flex-row items-center justify-between py-2 sm:py-3 px-4 sm:px-6 md:px-8 lg:px-12 max-w-screen-2xl mx-auto relative">
         {/* Logo and Hamburger (Mobile) */}
@@ -186,7 +186,7 @@ const HeaderBanner = () => {
             icon={<HelpCircle />}
             isTopNav={true}
             isMobile={false}
-            to="/ve-vnpt"
+            to="/vnpt"
           />
         </div>
 

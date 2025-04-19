@@ -6,6 +6,7 @@ import Home from './layout/Home';
 import Tintuc from './Components/tintuc';
 import Internet from './Components/internet';
 import Tv from './Components/tv';
+import About from './Components/about';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
   <Route path="/tin-tuc" element={<Tintuc />}></Route>
   <Route path="/internet" element={<Internet />}></Route>
   <Route path="/tv" element={<Tv />}></Route>
+  <Route path="/vnpt" element={<About />}></Route>
 
   </Routes>
   </BrowserRouter>
