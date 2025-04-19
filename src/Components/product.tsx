@@ -130,7 +130,7 @@ const ProductList = () => {
     <>
     
       {/* Banner Image with Overlay */}
-      <div className="relative w-full">
+      <div className="mt-[20px] relative w-full">
         <img
           src={banner1}
           alt="VNPT Banner"
