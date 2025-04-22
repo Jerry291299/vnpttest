@@ -7,6 +7,8 @@ import mytvChannelsImage from "../img/kenh.jpg";
 import mytvInterfaceImage from "../img/kenh2.jpg";
 import zalo from "../img/Icon_of_Zalo.svg.png";
 
+import Formdangkytv from './Formdangkytv';
+
 type Props = {};
 
 const tv = (props: Props) => {
@@ -137,21 +139,7 @@ const tv = (props: Props) => {
         </p>
       </div>
 
-      <div className="flex w-full justify-center items-center space-x-2 sm:space-x-3 py-3 sm:py-4">
-        <a
-          href="https://zalo.me/0818122111"
-          className="flex items-center bg-white rounded-full shadow-lg border-2 sm:border-4 border-blue-300 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4"
-        >
-          <img
-            src={zalo}
-            alt="Zalo"
-            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 mr-2 sm:mr-3"
-          />
-          <span className="text-red-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
-            0818.122.111
-          </span>
-        </a>
-      </div>
+      
 
 
       <div className="py-6 px-4 sm:px-6 md:px-8 lg:px-12 max-w-screen-2xl mx-auto">
@@ -178,21 +166,7 @@ const tv = (props: Props) => {
         ))}
       </ul>
     </div>
-    <div className="flex w-full justify-center items-center space-x-2 sm:space-x-3 py-3 sm:py-4">
-        <a
-          href="https://zalo.me/0818122111"
-          className="flex items-center bg-white rounded-full shadow-lg border-2 sm:border-4 border-blue-300 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4"
-        >
-          <img
-            src={zalo}
-            alt="Zalo"
-            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 mr-2 sm:mr-3"
-          />
-          <span className="text-red-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
-            0818.122.111
-          </span>
-        </a>
-      </div>
+   
 
     <div className="py-6 px-4 sm:px-6 md:px-8 lg:px-12 max-w-screen-2xl mx-auto">
       <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed mb-4">
@@ -253,55 +227,40 @@ const tv = (props: Props) => {
       </p>
     </div>
 
-    <div className="flex w-full justify-center items-center space-x-2 sm:space-x-3 py-3 sm:py-4">
-        <a
-          href="https://zalo.me/0818122111"
-          className="flex items-center bg-white rounded-full shadow-lg border-2 sm:border-4 border-blue-300 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4"
-        >
-          <img
-            src={zalo}
-            alt="Zalo"
-            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 mr-2 sm:mr-3"
-          />
-          <span className="text-red-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl">
-            0818.122.111
-          </span>
-        </a>
-      </div>
+    <Formdangkytv/>
 
 
-    <div className="py-6 px-4 sm:px-6 md:px-8 lg:px-12 max-w-screen-2xl mx-auto">
-      <h2 className="text-lg sm:text-xl md:text-2xl font-bold  mb-4">
-        Thông tin liên hệ nhà mạng VNPT để lắp đặt
-      </h2>
-      <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
-        <span className="inline-flex items-start">
-          <span className="text-orange-500 mr-2">✔</span>
-          Mạng VNPT – Tập đoàn Bưu chính Viễn thông Việt Nam
-        </span>
-        <br />
-        <span className="inline-flex items-start">
-          <span className="text-orange-500 mr-2">✔</span>
-          <strong>HOTLINE:</strong>{' '}
-          <a href="https://zalo.me/0818122111" className="text-[#1E73BE] text-red-600 ml-[10px] hover:underline">
-            0818.122.111
+    <div className="fixed bottom-20 right-4 flex flex-col items-center gap-4 z-50">
+          {/* Zalo */}
+          <a
+            href="https://zalo.me/0818122111"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative w-14 h-14 rounded-full flex items-center justify-center bg-blue-500 shadow-lg hover:scale-105 transition-transform duration-200 animate-[shake_1.5s_infinite]"
+          >
+            <div className="absolute inset-0 bg-blue-300 opacity-30 rounded-full animate-ping"></div>
+            <img src={zalo} alt="Zalo" className="w-7 h-7 z-10 relative" />
           </a>
-        </span>
-        <br />
-        <span className="inline-flex items-start">
-          <span className="text-orange-500 mr-2">✔</span>
-          <strong>Website:</strong>{' '}
-          <a href="https://vnpt-online.com" target="_blank" rel="noopener noreferrer" className="text-[#1E73BE] ml-[10px] hover:underline">
-            https://vnpt-online.com
+
+          {/* Phone */}
+          <a
+            href="tel:0818122111"
+            className="relative w-14 h-14 rounded-full flex items-center justify-center bg-red-500 shadow-lg hover:scale-105 transition-transform duration-200 animate-[shake_1.5s_infinite]"
+          >
+            <div className="absolute inset-0 bg-red-300 opacity-30 rounded-full animate-ping"></div>
+            <svg
+              className="w-6 h-6 text-white z-10 relative"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fillRule="evenodd"
+                d="M2.25 4.5A2.25 2.25 0 014.5 2.25h2.356a2.25 2.25 0 012.123 1.53l.697 2.092a2.25 2.25 0 01-.52 2.362l-1.23 1.23a12.056 12.056 0 005.325 5.325l1.23-1.23a2.25 2.25 0 012.362-.52l2.092.697a2.25 2.25 0 011.53 2.123V19.5a2.25 2.25 0 01-2.25 2.25h-.75C9.457 21.75 2.25 14.543 2.25 6.75v-.75z"
+                clipRule="evenodd"
+              />
+            </svg>
           </a>
-        </span>
-        <br />
-        <span className="inline-flex items-start">
-          <span className="text-orange-500 mr-2">✔</span>
-          <strong className='mr-[10px]'>Trụ sở:</strong> Tòa nhà VNPT, số 57 Phố Huỳnh Thúc Kháng, Phường Láng Hạ, Quận Đống Đa, Thành phố Hà Nội, Việt Nam
-        </span>
-      </p>
-    </div>
+        </div>
     
 
 
