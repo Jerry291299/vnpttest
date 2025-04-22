@@ -274,7 +274,7 @@ const ProductList: React.FC = () => {
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <button
-            className="bg-blue-600 text-white font-bold text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white font-bold text-sm sm:text-lg px-6 sm:px-8 py-2 sm:py-3 rounded-full shadow-md hover:bg-blue-700 transition"
             onClick={() => handleOpenForm(product.name)}
           >
             Đăng ký ngay
