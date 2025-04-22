@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Formdangkytv = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [formData, setFormData] = useState({ name: "",  phone: "", message: "" });
   const [status, setStatus] = useState<"success" | "error" | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -15,7 +15,6 @@ const Formdangkytv = () => {
 
     const data = new FormData();
     data.append("Họ và tên", formData.name);
-    data.append("Email", formData.email);
     data.append("Số điện thoại", formData.phone);
     data.append(
       "Nội dung cần tư vấn",
@@ -33,7 +32,7 @@ const Formdangkytv = () => {
         setIsLoading(false);
         if (res.ok) {
           setStatus("success");
-          setFormData({ name: "", email: "", phone: "", message: "" });
+          setFormData({ name: "", phone: "", message: "" });
         } else {
           setStatus("error");
           setTimeout(() => setStatus(null), 2000);
@@ -94,7 +93,7 @@ const Formdangkytv = () => {
             Đăng ký tư vấn truyền hình VNPT
           </h2>
           <button
-            onClick={() => setFormData({ name: "", email: "", phone: "", message: "" })}
+            onClick={() => setFormData({ name: "",  phone: "", message: "" })}
             className="text-gray-400 hover:text-gray-600"
             title="Đóng"
           >
@@ -120,22 +119,7 @@ const Formdangkytv = () => {
               />
             </div>
           </div>
-          <div className="relative">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <div className="flex items-center border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-500">
-              <svg className="w-5 h-5 text-gray-400 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l9-6 9 6v12a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
-              </svg>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Nhập email (không bắt buộc)"
-                className="w-full p-3 pl-10 border-none rounded-lg focus:outline-none"
-              />
-            </div>
-          </div>
+          
           <div className="relative">
             <label className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại *</label>
             <div className="flex items-center border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-500">
