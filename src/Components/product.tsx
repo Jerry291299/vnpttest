@@ -348,12 +348,6 @@ const ProductList: React.FC = () => {
                 required
               />
               <input
-                type="email"
-                name="Email"
-                placeholder="Nhập email"
-                className="w-full p-2 border rounded mb-3"
-              />
-              <input
                 type="tel"
                 name="Số điện thoại"
                 placeholder="Nhập số điện thoại"
