@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import banner from "../img/banner.png";
 import banner2 from "../img/banner-vnpt-2-20250219043404-_b0mf.png";
 import banner3 from "../img/banner2.png";
@@ -24,9 +25,10 @@ interface Product {
 }
 
 const ProductList: React.FC = () => {
-  const [isFormOpen, setIsFormOpen] = React.useState(false);
-  const [selectedProduct, setSelectedProduct] = React.useState("");
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState("");
   const [status, setStatus] = useState<"success" | "error" | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const handleOpenForm = (productName: string) => {
     setSelectedProduct(productName);
@@ -35,45 +37,65 @@ const ProductList: React.FC = () => {
 
   const handleCloseForm = () => {
     setIsFormOpen(false);
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset();
+    }
   };
+
   const handleClosePopup = () => {
     setStatus(null);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
-  
+
+    // Lấy reCAPTCHA token
+    const recaptchaToken = recaptchaRef.current?.getValue();
+    if (!recaptchaToken) {
+      alert("Vui lòng xác nhận bạn không phải là robot.");
+      return;
+    }
+
     const message = formData.get("Gói quan tâm")?.toString().trim();
     if (!message) {
       formData.set("Gói quan tâm", `Tôi quan tâm gói: ${selectedProduct}`);
     }
-  
+
     formData.append("_replyto", `${formData.get("Số điện thoại")}@fake.email`);
     formData.append("_subject", "VNPT-Online - Đăng ký từ trang sản phẩm");
-  
-    fetch("https://formspree.io/f/xanonnkz", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Accept: "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          setStatus("success");
-          setIsFormOpen(false);
-          setTimeout(() => setStatus(null), 3000);
-        } else {
-          setStatus("error");
-        }
-      })
-      .catch(() => {
-        alert("Có lỗi xảy ra. Vui lòng thử lại.");
+    formData.append("g-recaptcha-response", recaptchaToken);
+
+    try {
+      const response = await fetch("https://formspree.io/f/xanonnkz", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
       });
+
+      if (response.ok) {
+        setStatus("success");
+        setIsFormOpen(false);
+        setTimeout(() => setStatus(null), 3000);
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
+      } else {
+        setStatus("error");
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
+      }
+    } catch {
+      alert("Có lỗi xảy ra. Vui lòng thử lại.");
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+    }
   };
-  
 
   const products1: Product[] = [
     {
@@ -290,9 +312,8 @@ const ProductList: React.FC = () => {
 
   return (
     <>
-
-{/* Success Popup */}
-{status === "success" && (
+      {/* Success Popup */}
+      {status === "success" && (
         <div className="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
             <span className="text-2xl">🎉</span>
@@ -314,9 +335,7 @@ const ProductList: React.FC = () => {
             <h3 className="text-lg font-bold text-red-700 mt-2">
               Gửi thất bại
             </h3>
-            <p className="text-gray-600 mt-2">
-              Vui lòng thử lại sau.
-            </p>
+            <p className="text-gray-600 mt-2">Vui lòng thử lại sau.</p>
             <button
               onClick={handleClosePopup}
               className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition"
@@ -327,8 +346,7 @@ const ProductList: React.FC = () => {
         </div>
       )}
 
-
-
+      {/* Form đăng ký với reCAPTCHA */}
       {isFormOpen && (
         <div className="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg w-96">
@@ -341,8 +359,6 @@ const ProductList: React.FC = () => {
                 name="_subject"
                 value="VNPT-Online - Khách hàng vừa đăng ký"
               />
-            
-
               <input
                 type="text"
                 name="Họ và tên"
@@ -362,6 +378,35 @@ const ProductList: React.FC = () => {
                 placeholder={`Tôi quan tâm gói: ${selectedProduct}`}
                 className="w-full p-2 border rounded mb-3"
               ></textarea>
+              {/* Thêm reCAPTCHA */}
+              <div className="mb-3">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey="6LcxxCQrAAAAAHfPyR2oPbawk4B6xR5o4AZSuxts"
+                />
+              </div>
+              {/* Thông báo bảo mật của Google */}
+              <p className="text-xs text-gray-600 mb-3">
+                Trang này được bảo vệ bởi reCAPTCHA và tuân theo{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  Chính sách quyền riêng tư
+                </a>{" "}
+                và{" "}
+                <a
+                  href="https://policies.google.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  Điều khoản dịch vụ
+                </a>{" "}
+                của Google.
+              </p>
               <button
                 type="submit"
                 className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
@@ -369,7 +414,6 @@ const ProductList: React.FC = () => {
                 Gửi đăng ký
               </button>
             </form>
-
             <button
               onClick={handleCloseForm}
               className="mt-3 text-red-500 hover:underline"

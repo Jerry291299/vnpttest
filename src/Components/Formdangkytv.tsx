@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Formdangkytv = () => {
-  const [formData, setFormData] = useState({ name: "",  phone: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
   const [status, setStatus] = useState<"success" | "error" | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -12,7 +14,15 @@ const Formdangkytv = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-  
+
+    // Lấy reCAPTCHA token
+    const recaptchaToken = recaptchaRef.current?.getValue();
+    if (!recaptchaToken) {
+      alert("Vui lòng xác nhận bạn không phải là robot.");
+      setIsLoading(false);
+      return;
+    }
+
     const data = new FormData();
     data.append("Họ và tên", formData.name);
     data.append("Số điện thoại", formData.phone);
@@ -22,8 +32,9 @@ const Formdangkytv = () => {
     );
     data.append("_replyto", `${formData.phone}@noemail.fake`);
     data.append("_subject", "VNPT-Online - Khách hàng cần tư vấn");
-  
-    fetch("https://formspree.io/f/your-form-id", {
+    data.append("g-recaptcha-response", recaptchaToken);
+
+    fetch("https://formspree.io/f/xanonnkz", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -35,28 +46,34 @@ const Formdangkytv = () => {
         if (res.ok) {
           setStatus("success");
           setFormData({ name: "", phone: "", message: "" });
+          if (recaptchaRef.current) {
+            recaptchaRef.current.reset();
+          }
         } else {
           setStatus("error");
+          if (recaptchaRef.current) {
+            recaptchaRef.current.reset();
+          }
         }
         setTimeout(() => setStatus(null), 3000);
       })
       .catch(() => {
         setIsLoading(false);
         setStatus("error");
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
         setTimeout(() => setStatus(null), 3000);
       });
   };
-  
 
-  // Tự động đóng popup sau 4 giây nếu là trạng thái thành công
+  // Tự động đóng popup sau 2 giây nếu là trạng thái thành công
   useEffect(() => {
     if (status === "success") {
       const timer = setTimeout(() => setStatus(null), 2000);
       return () => clearTimeout(timer);
     }
   }, [status]);
-
- 
 
   return (
     <>
@@ -86,7 +103,6 @@ const Formdangkytv = () => {
             <p className="text-gray-600 mt-2">
               Vui lòng thử lại sau.
             </p>
-            
           </div>
         </div>
       )}
@@ -97,11 +113,13 @@ const Formdangkytv = () => {
             Đăng ký tư vấn truyền hình VNPT
           </h2>
           <button
-            onClick={() => setFormData({ name: "",  phone: "", message: "" })}
+            onClick={() => setFormData({ name: "", phone: "", message: "" })}
             className="text-gray-400 hover:text-gray-600"
             title="Đóng"
           >
-            
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
 
@@ -152,6 +170,35 @@ const Formdangkytv = () => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
             />
           </div>
+          {/* Thêm reCAPTCHA */}
+          <div>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey="6LcxxCQrAAAAAHfPyR2oPbawk4B6xR5o4AZSuxts"
+            />
+          </div>
+          {/* Thông báo bảo mật của Google */}
+          <p className="text-xs text-gray-600">
+            Trang này được bảo vệ bởi reCAPTCHA và tuân theo{" "}
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Chính sách quyền riêng tư
+            </a>{" "}
+            và{" "}
+            <a
+              href="https://policies.google.com/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Điều khoản dịch vụ
+            </a>{" "}
+            của Google.
+          </p>
           <button
             type="submit"
             disabled={isLoading}

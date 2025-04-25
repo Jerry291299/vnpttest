@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Formdangky1 = () => {
   const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
   const [status, setStatus] = useState<"success" | "error" | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,6 +15,14 @@ const Formdangky1 = () => {
     event.preventDefault();
     setIsLoading(true);
 
+    // Lấy reCAPTCHA token
+    const recaptchaToken = recaptchaRef.current?.getValue();
+    if (!recaptchaToken) {
+      alert("Vui lòng xác nhận bạn không phải là robot.");
+      setIsLoading(false);
+      return;
+    }
+
     const data = new FormData();
     data.append("Họ và tên", formData.name);
     data.append("Số điện thoại", formData.phone);
@@ -20,8 +30,9 @@ const Formdangky1 = () => {
       "Nội dung cần tư vấn",
       formData.message.trim() !== "" ? formData.message : "Tôi cần tư vấn về lắp đặt Internet VNPT"
     );
-    data.append("_replyto", `${formData.phone}@noemail.fake`); // tránh lỗi email
+    data.append("_replyto", `${formData.phone}@noemail.fake`);
     data.append("_subject", "VNPT-Online - Khách hàng cần tư vấn");
+    data.append("g-recaptcha-response", recaptchaToken);
 
     fetch("https://formspree.io/f/xanonnkz", {
       method: "POST",
@@ -35,14 +46,23 @@ const Formdangky1 = () => {
         if (res.ok) {
           setStatus("success");
           setFormData({ name: "", phone: "", message: "" });
+          if (recaptchaRef.current) {
+            recaptchaRef.current.reset();
+          }
         } else {
           setStatus("error");
+          if (recaptchaRef.current) {
+            recaptchaRef.current.reset();
+          }
         }
         setTimeout(() => setStatus(null), 3000);
       })
       .catch(() => {
         setIsLoading(false);
         setStatus("error");
+        if (recaptchaRef.current) {
+          recaptchaRef.current.reset();
+        }
         setTimeout(() => setStatus(null), 3000);
       });
   };
@@ -137,6 +157,35 @@ const Formdangky1 = () => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
             />
           </div>
+          {/* Thêm reCAPTCHA */}
+          <div>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey="6LcxxCQrAAAAAHfPyR2oPbawk4B6xR5o4AZSuxts"
+            />
+          </div>
+          {/* Thông báo bảo mật của Google */}
+          <p className="text-xs text-gray-600">
+            Trang này được bảo vệ bởi reCAPTCHA và tuân theo{" "}
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Chính sách quyền riêng tư
+            </a>{" "}
+            và{" "}
+            <a
+              href="https://policies.google.com/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Điều khoản dịch vụ
+            </a>{" "}
+            của Google.
+          </p>
           <button
             type="submit"
             disabled={isLoading}
