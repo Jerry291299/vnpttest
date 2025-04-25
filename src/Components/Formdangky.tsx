@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Formdangky1 = () => {
-  const [formData, setFormData] = useState({ name: "",  phone: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
   const [status, setStatus] = useState<"success" | "error" | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -20,31 +20,33 @@ const Formdangky1 = () => {
       "Nội dung cần tư vấn",
       formData.message.trim() !== "" ? formData.message : "Tôi cần tư vấn về lắp đặt Internet VNPT"
     );
+    data.append("_replyto", `${formData.phone}@noemail.fake`); // tránh lỗi email
     data.append("_subject", "VNPT-Online - Khách hàng cần tư vấn");
-    data.append("_template", "table");
-    data.append("_captcha", "false");
 
-    fetch("https://formsubmit.co/Yenntfpt87@gmail.com", {
+    fetch("https://formspree.io/f/xanonnkz", {
       method: "POST",
       body: data,
+      headers: {
+        Accept: "application/json",
+      },
     })
       .then((res) => {
         setIsLoading(false);
         if (res.ok) {
           setStatus("success");
-          setFormData({ name: "",  phone: "", message: "" });
+          setFormData({ name: "", phone: "", message: "" });
         } else {
           setStatus("error");
-          setTimeout(() => setStatus(null), 2000);
         }
+        setTimeout(() => setStatus(null), 3000);
       })
       .catch(() => {
         setIsLoading(false);
         setStatus("error");
+        setTimeout(() => setStatus(null), 3000);
       });
   };
 
-  // Tự động đóng popup sau 4 giây nếu là trạng thái thành công
   useEffect(() => {
     if (status === "success") {
       const timer = setTimeout(() => setStatus(null), 2000);
@@ -52,11 +54,8 @@ const Formdangky1 = () => {
     }
   }, [status]);
 
- 
-
   return (
     <>
-      {/* Success Popup */}
       {status === "success" && (
         <div className="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
@@ -71,7 +70,6 @@ const Formdangky1 = () => {
         </div>
       )}
 
-      {/* Error Popup */}
       {status === "error" && (
         <div className="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
@@ -82,7 +80,6 @@ const Formdangky1 = () => {
             <p className="text-gray-600 mt-2">
               Vui lòng thử lại sau.
             </p>
-            
           </div>
         </div>
       )}
@@ -92,13 +89,6 @@ const Formdangky1 = () => {
           <h2 className="text-2xl font-bold text-center text-blue-700 uppercase tracking-wide">
             Đăng ký tư vấn lắp mạng VNPT
           </h2>
-          <button
-            onClick={() => setFormData({ name: "", phone: "", message: "" })}
-            className="text-gray-400 hover:text-gray-600"
-            title="Đóng"
-          >
-            
-          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

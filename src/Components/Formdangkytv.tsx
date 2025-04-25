@@ -12,7 +12,7 @@ const Formdangkytv = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-
+  
     const data = new FormData();
     data.append("Họ và tên", formData.name);
     data.append("Số điện thoại", formData.phone);
@@ -20,12 +20,14 @@ const Formdangkytv = () => {
       "Nội dung cần tư vấn",
       formData.message.trim() !== "" ? formData.message : "Tôi cần tư vấn về truyền hình VNPT"
     );
+    data.append("_replyto", `${formData.phone}@noemail.fake`);
     data.append("_subject", "VNPT-Online - Khách hàng cần tư vấn");
-    data.append("_template", "table");
-    data.append("_captcha", "false");
-
-    fetch("https://formsubmit.co/Yenntfpt87@gmail.com", {
+  
+    fetch("https://formspree.io/f/your-form-id", {
       method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
       body: data,
     })
       .then((res) => {
@@ -35,14 +37,16 @@ const Formdangkytv = () => {
           setFormData({ name: "", phone: "", message: "" });
         } else {
           setStatus("error");
-          setTimeout(() => setStatus(null), 2000);
         }
+        setTimeout(() => setStatus(null), 3000);
       })
       .catch(() => {
         setIsLoading(false);
         setStatus("error");
+        setTimeout(() => setStatus(null), 3000);
       });
   };
+  
 
   // Tự động đóng popup sau 4 giây nếu là trạng thái thành công
   useEffect(() => {

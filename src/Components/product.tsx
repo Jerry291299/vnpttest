@@ -44,18 +44,21 @@ const ProductList: React.FC = () => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
-
-    // Lấy giá trị ô "Gói quan tâm"
+  
     const message = formData.get("Gói quan tâm")?.toString().trim();
-
-    // Nếu khách chưa nhập gì, tự động gán gói mặc định
     if (!message) {
       formData.set("Gói quan tâm", `Tôi quan tâm gói: ${selectedProduct}`);
     }
-
-    fetch("https://formsubmit.co/Yenntfpt87@gmail.com", {
+  
+    formData.append("_replyto", `${formData.get("Số điện thoại")}@fake.email`);
+    formData.append("_subject", "VNPT-Online - Đăng ký từ trang sản phẩm");
+  
+    fetch("https://formspree.io/f/xanonnkz", {
       method: "POST",
       body: formData,
+      headers: {
+        Accept: "application/json",
+      },
     })
       .then((response) => {
         if (response.ok) {
@@ -70,6 +73,7 @@ const ProductList: React.FC = () => {
         alert("Có lỗi xảy ra. Vui lòng thử lại.");
       });
   };
+  
 
   const products1: Product[] = [
     {
@@ -337,8 +341,7 @@ const ProductList: React.FC = () => {
                 name="_subject"
                 value="VNPT-Online - Khách hàng vừa đăng ký"
               />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
+            
 
               <input
                 type="text"
