@@ -53,7 +53,7 @@ const ProductList: React.FC = () => {
       formData.set("Gói quan tâm", `Tôi quan tâm gói: ${selectedProduct}`);
     }
 
-    fetch("https://formsubmit.co/ungductrungtrung@gmail.com", {
+    fetch("https://formsubmit.co/Yenntfpt87@gmail.com", {
       method: "POST",
       body: formData,
     })

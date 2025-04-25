@@ -24,7 +24,7 @@ const Formdangkytv = () => {
     data.append("_template", "table");
     data.append("_captcha", "false");
 
-    fetch("https://formsubmit.co/ungductrungtrung@gmail.com", {
+    fetch("https://formsubmit.co/Yenntfpt87@gmail.com", {
       method: "POST",
       body: data,
     })
