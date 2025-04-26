@@ -432,7 +432,7 @@ const ProductList: React.FC = () => {
       {/* Promo Section */}
       <div className="bg-white text-center py-2 sm:py-4 md:py-6 lg:py-8 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 max-w-screen-2xl mx-auto">
         <h3 className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-bold text-black uppercase mb-1 sm:mb-2 md:mb-3 lg:mb-4 xl:mb-6">
-          Khuyến mãi lắp mạng VNPT mới nhất tháng 03/2025
+          Khuyến mãi lắp mạng VNPT mới nhất tháng 05/2025
         </h3>
         <div className="space-y-1 sm:space-y-2 md:space-y-3 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-gray-700">
           <p>
