@@ -21,7 +21,7 @@ const internet = (props: Props) => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="justify-center text-center mb-6 sm:mb-8 md:mb-10">
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-2xl font-bold text-white uppercase font-sans">
-              Lắp cáp quang VNPT khuyến mãi tháng 8/2024 – Mạng VNPT
+              Lắp cáp quang VNPT khuyến mãi tháng 5/2025 – Mạng VNPT
             </h1>
           </div>
         </div>
