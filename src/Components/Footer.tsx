@@ -24,7 +24,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center mb-1 sm:mb-2">
               <span className="mr-2 text-base sm:text-lg">🌐</span>
-              <span className="text-xs sm:text-sm md:text-base">Website: http://cskh-vnpt.com</span>
+              <span className="text-xs sm:text-sm md:text-base">Website: https://vnpt-online.com</span>
             </div>
           </div>
 
