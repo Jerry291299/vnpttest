@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Home, Monitor, Newspaper, HelpCircle, Menu, X } from 'lucide-react';
-import logo from "../img/logo-vnpt-1.jpg";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Home, Monitor, Newspaper, HelpCircle, Menu, X, User, LogOut } from 'lucide-react';
+import logo from '../img/logo-vnpt-1.jpg';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAppContext } from '../contexts/app.context';
+import { supabase } from '../supabase';
 
 type NavItemProps = {
   icon?: React.ReactNode;
@@ -38,17 +40,17 @@ function NavItem({ icon, label, hasDropdown = false, dropdownItems, isTopNav = f
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLDivElement, MouseEvent>) => {
     if (hasDropdown) {
-      e.preventDefault(); // Prevent navigation when toggling dropdown
-      e.stopPropagation(); // Prevent onClick from closing the menu
+      e.preventDefault();
+      e.stopPropagation();
       setIsDropdownOpen(!isDropdownOpen);
     } else if (isMobile && onClick) {
-      onClick(); // Close the menu for non-dropdown items
+      onClick();
     }
   };
 
   const handleDropdownItemClick = () => {
     if (isMobile && onClick) {
-      onClick(); // Close the menu when a dropdown item is clicked
+      onClick();
     }
   };
 
@@ -69,7 +71,6 @@ function NavItem({ icon, label, hasDropdown = false, dropdownItems, isTopNav = f
       {isTopNav ? (
         <div className="flex flex-col w-full">
           {hasDropdown ? (
-            // For items with dropdown, use a div instead of NavLink to prevent navigation
             <div
               className={`flex ${isMobile ? 'flex-row items-center justify-between py-3 px-4 text-base' : 'flex-col items-center px-1 sm:px-2 md:px-3 lg:px-4'} font-bold font-sans text-black hover:text-gray-700 cursor-pointer`}
               onClick={handleClick}
@@ -89,9 +90,8 @@ function NavItem({ icon, label, hasDropdown = false, dropdownItems, isTopNav = f
               )}
             </div>
           ) : (
-            // For items without dropdown, use NavLink as before
             <NavLink
-              to={to || "#"}
+              to={to || '#'}
               className={({ isActive }) =>
                 `flex ${isMobile ? 'flex-row items-center justify-between py-3 px-4 text-base' : 'flex-col items-center px-1 sm:px-2 md:px-3 lg:px-4'} font-bold font-sans text-black hover:text-gray-700 ${isActive ? 'text-gray-700' : ''}`
               }
@@ -139,15 +139,45 @@ function NavItem({ icon, label, hasDropdown = false, dropdownItems, isTopNav = f
 }
 
 const HeaderBanner = () => {
-  const dropdownItems = [
-    { label: "Cáp Quang VNPT", to: "/internet" },
-    { label: "Truyền hình Mytv", to: "/tv" },
-  ];
+  const { isAuthenticated, role, setIsAuthenticated, setRole } = useAppContext();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+
+  const dropdownItems = [
+    { label: 'Cáp Quang VNPT', to: '/internet' },
+    { label: 'Truyền hình Mytv', to: '/tv' },
+  ];
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    setIsUserDropdownOpen(false);
   };
+
+  const handleUserDropdownToggle = () => {
+    setIsUserDropdownOpen(!isUserDropdownOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      setIsAuthenticated(false);
+      setRole('customer');
+      sessionStorage.removeItem('isAuthenticated');
+      sessionStorage.removeItem('role');
+      navigate('/');
+      if (isMenuOpen) toggleMenu();
+    } catch (error) {
+      console.error('Error logging out:', error);
+      alert('Không thể đăng xuất');
+    }
+  };
+
+  const userDropdownItems = [
+    ...(role === 'admin' ? [{ label: 'Quản trị', to: '/admin' }] : []),
+    { label: 'Đăng xuất', to: '#', onClick: handleLogout },
+  ];
 
   return (
     <div className="w-full border-1 border-gray-200 bg-white shadow-md z-50 mt-[10px]">
@@ -189,7 +219,6 @@ const HeaderBanner = () => {
             dropdownItems={dropdownItems}
             isTopNav={true}
             isMobile={false}
-            // Removed 'to' prop to prevent navigation
           />
           <NavItem
             label="TIN TỨC"
@@ -205,19 +234,70 @@ const HeaderBanner = () => {
             isMobile={false}
             to="/vnpt"
           />
+          <NavItem
+            label="LIÊN HỆ"
+            icon={<HelpCircle />}
+            isTopNav={true}
+            isMobile={false}
+            to="/lienhe"
+          />
         </div>
 
-        {/* Hotline (Desktop) */}
-        <div className="hidden sm:flex items-center mt-2 sm:mt-0">
+        {/* Hotline and Login/Logout (Desktop) */}
+        <div className="hidden sm:flex items-center space-x-3">
           <a
             href="https://zalo.me/0818122111"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="bg-[#1E73BE] text-white text-xs sm:text-sm md:text-base lg:text-lg font-bold font-sans rounded-full px-3 sm:px-4 py-1 sm:py-2">
+            <span className=" text-[#1E73BE] text-xs sm:text-sm md:text-base lg:text-lg font-bold font-sans rounded-full px-3 sm:px-4 py-1 sm:py-2">
               HOTLINE: 0818.122.111
             </span>
           </a>
+          {isAuthenticated ? (
+            <div className="relative">
+              <button
+                onClick={handleUserDropdownToggle}
+                className="flex items-center bg-blue-600 text-white text-xs sm:text-sm md:text-base font-bold font-sans rounded-full px-3 sm:px-4 py-1 sm:py-2 hover:bg-blue-700"
+              >
+                <User className="w-4 h-4 mr-1" />
+                Tài khoản
+              </button>
+              {isUserDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10 text-gray-600">
+                  {userDropdownItems.map((item, index) => (
+                    <NavLink
+                      key={index}
+                      to={item.to}
+                      onClick={(e) => {
+                        if (item.onClick) {
+                          e.preventDefault();
+                          item.onClick();
+                        }
+                        setIsUserDropdownOpen(false);
+                      }}
+                      className={({ isActive }) =>
+                        `block px-4 py-2 text-sm hover:bg-gray-100 hover:text-blue-900 font-sans ${isActive && item.to !== '#' ? 'text-blue-900 bg-gray-100' : ''}`
+                      }
+                    >
+                      <div className="flex items-center">
+                        {item.label === 'Quản trị' && <User className="w-4 h-4 mr-2" />}
+                        {item.label === 'Đăng xuất' && <LogOut className="w-4 h-4 mr-2" />}
+                        {item.label}
+                      </div>
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : (
+            <NavLink
+              to="/login"
+              className="bg-blue-600 text-white text-xs sm:text-sm md:text-base font-bold font-sans rounded-full px-3 sm:px-4 py-1 sm:py-2 hover:bg-blue-700"
+            >
+              Đăng nhập
+            </NavLink>
+          )}
         </div>
 
         {/* Mobile Menu (Overlay) */}
@@ -252,7 +332,6 @@ const HeaderBanner = () => {
                 dropdownItems={dropdownItems}
                 isTopNav={true}
                 isMobile={true}
-                // Removed 'to' prop to prevent navigation
                 onClick={toggleMenu}
               />
               <NavItem
@@ -271,6 +350,64 @@ const HeaderBanner = () => {
                 to="/vnpt"
                 onClick={toggleMenu}
               />
+              <NavItem
+                label="LIÊN HỆ"
+                icon={<HelpCircle />}
+                isTopNav={true}
+                isMobile={true}
+                to="/lienhe"
+                onClick={toggleMenu}
+              />
+              {/* Mobile Login/Logout */}
+              {isAuthenticated ? (
+                <div className="relative w-full">
+                  <div
+                    className="flex flex-row items-center justify-between py-3 px-4 text-base font-bold font-sans text-black hover:text-gray-700 cursor-pointer"
+                    onClick={handleUserDropdownToggle}
+                  >
+                    <div className="flex items-center">
+                      <User className="w-6 h-6 mr-3 text-black" />
+                      <span className="text-base">Tài khoản</span>
+                    </div>
+                    <span className="ml-1 text-black">
+                      {isUserDropdownOpen ? '▲' : '▼'}
+                    </span>
+                  </div>
+                  {isUserDropdownOpen && (
+                    <div className="w-full pl-8 bg-gray-50 text-gray-600">
+                      {userDropdownItems.map((item, index) => (
+                        <NavLink
+                          key={index}
+                          to={item.to}
+                          onClick={(e) => {
+                            if (item.onClick) {
+                              e.preventDefault();
+                              item.onClick();
+                            }
+                            toggleMenu();
+                          }}
+                          className="block px-4 py-2 text-sm hover:bg-gray-100 hover:text-blue-900 font-sans border-b border-gray-200"
+                        >
+                          <div className="flex items-center">
+                            {item.label === 'Quản trị' && <User className="w-4 h-4 mr-2" />}
+                            {item.label === 'Đăng xuất' && <LogOut className="w-4 h-4 mr-2" />}
+                            {item.label}
+                          </div>
+                        </NavLink>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <NavItem
+                  label="Đăng nhập"
+                  icon={<User />}
+                  isTopNav={true}
+                  isMobile={true}
+                  to="/login"
+                  onClick={toggleMenu}
+                />
+              )}
             </div>
 
             {/* Hotline (Mobile) */}

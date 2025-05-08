@@ -105,7 +105,7 @@ const about = (props: Props) => {
 
       <div className="py-4 px-4 sm:px-6 md:px-8 lg:px-12 max-w-screen-xl mx-auto">
         <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-blue-700 mb-4 tracking-tight">
-          VNPT đang cung cấp các sản phẩm dịch vụ chính nhu
+          VNPT đang cung cấp các sản phẩm dịch vụ chính như:
         </h2>
         <ul className="space-y-3 text-xs sm:text-sm md:text-base text-gray-600 mb-4">
           {[

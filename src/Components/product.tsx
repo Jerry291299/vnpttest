@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import banner from "../img/banner.png";
 import banner2 from "../img/banner-vnpt-2-20250219043404-_b0mf.png";
@@ -9,26 +9,60 @@ import cskh3 from "../img/vnpt-anh-lap-dat-1-20250219135917-c4iia.png";
 import cskh4 from "../img/vnpt-anh-lap-dat-2-20250219135811-2z0a6.png";
 import zalo from "../img/Icon_of_Zalo.svg.png";
 import banner1 from "../img/banner-vnpt-1-20250219043809-p4bty.png";
+import { supabase } from "../supabase";
 
 interface Product {
+  id: string;
   name: string;
   price1: string;
   price2?: string;
-  downloadSpeed: string;
-  uploadSpeed?: string;
+  downloadspeed: string;
+  uploadspeed?: string;
   internationalspeed?: string;
   equipment: string;
   suitability: string;
   subscription: string;
-  installationFee: string;
-  contact: string;
+  installationfee: string;
+  category: string;
+  created_at: string;
 }
 
 const ProductList: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState("");
   const [status, setStatus] = useState<"success" | "error" | null>(null);
+  const [internetProducts, setInternetProducts] = useState<Product[]>([]);
+  const [comboProducts, setComboProducts] = useState<Product[]>([]);
+  const [companyProducts, setCompanyProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
+
+  // Fetch products from Supabase
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.from("products").select("*");
+      if (error) {
+        throw new Error("Không thể tải danh sách sản phẩm");
+      }
+      // Filter products by category
+      const internet = data.filter((p: Product) => p.category === "Internet");
+      const combo = data.filter((p: Product) => p.category === "Combo InternetTV");
+      const company = data.filter((p: Product) => p.category === "CompanyInternet");
+      setInternetProducts(internet);
+      setComboProducts(combo);
+      setCompanyProducts(company);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const handleOpenForm = (productName: string) => {
     setSelectedProduct(productName);
@@ -97,120 +131,6 @@ const ProductList: React.FC = () => {
     }
   };
 
-  const products1: Product[] = [
-    {
-      name: "HOME 2",
-      price1: "180.000đ",
-      price2: "220.000đ",
-      downloadSpeed: "300Mbps",
-      uploadSpeed: "300Mbps",
-      equipment: "Trang bị modem wifi 6",
-      suitability: "Phù hợp cá nhân, gia đình nhỏ",
-      subscription: "6 tháng + 0 va 12 tháng +1",
-      installationFee: "Phí lắp đặt 300.000Đ",
-      contact: "0818.122.111",
-    },
-    {
-      name: "HOME 3",
-      price1: "265.000đ",
-      price2: "300.000đ",
-      downloadSpeed: "500Mbps",
-      uploadSpeed: "500Mbps",
-      equipment: "Trang bị modem wifi 6",
-      suitability: "Phù hợp gia đình vừa và lớn",
-      subscription: "6 tháng + 0 va 12 tháng +1",
-      installationFee: "Phí lắp đặt 300.000Đ",
-      contact: "0818.122.111",
-    },
-    {
-      name: "HOME 4",
-      price1: "285.000đ",
-      price2: "335.000đ",
-      downloadSpeed: "1.000Mbps",
-      uploadSpeed: "1.000Mbps",
-      equipment: "Trang bị modem wifi 6",
-      suitability: "Phù hợp stream, game, online",
-      subscription: "6 tháng + 0 va 12 tháng +1",
-      installationFee: "Phí lắp đặt 300.000Đ",
-      contact: "0818.122.111",
-    },
-  ];
-
-  const products2: Product[] = [
-    {
-      name: "Combo HOME 2",
-      price1: "210.000đ",
-      price2: "250.000đ",
-      downloadSpeed: "300Mbps",
-      uploadSpeed: "300Mbps",
-      equipment: "Trang bị modem wifi 6",
-      suitability: "Phù hợp cá nhân, gia đình nhỏ",
-      subscription: "6 tháng + 0 va 12 tháng +1",
-      installationFee: "Phí lắp đặt 300.000Đ",
-      contact: "0818.122.111",
-    },
-    {
-      name: "Combo HOME 3",
-      price1: "295.000đ",
-      price2: "330.000đ",
-      downloadSpeed: "800Mbps",
-      uploadSpeed: "5Mbps",
-      equipment: "Trang bị modem wifi 6",
-      suitability: "Phù hợp gia đình vừa và lớn",
-      subscription: "6 tháng + 0 va 12 tháng +1",
-      installationFee: "Phí lắp đặt 300.000Đ",
-      contact: "0818.122.111",
-    },
-    {
-      name: "Combo HOME 4",
-      price1: "315.000đ",
-      price2: "365.000đ",
-      downloadSpeed: "1.000Mbps",
-      uploadSpeed: "8Mbps",
-      equipment: "Trang bị modem wifi 6",
-      suitability: "Phù hợp stream, game, online",
-      subscription: "6 tháng + 0 va 12 tháng +1",
-      installationFee: "Phí lắp đặt 300.000Đ",
-      contact: "0818.122.111",
-    },
-  ];
-
-  const products3: Product[] = [
-    {
-      name: "FIBER S1",
-      price1: "418.000đ",
-      downloadSpeed: "400Mbps",
-      internationalspeed: "2Mbps",
-      equipment: "Trang bị modem wifi 6",
-      suitability: "Phù hợp công ty 10 - 15 người",
-      subscription: "6 tháng + 0 va 12 tháng +1",
-      installationFee: "Phí lắp đặt 300.000Đ",
-      contact: "0818.122.111",
-    },
-    {
-      name: "FIBER S2",
-      price1: "660.000đ",
-      downloadSpeed: "800Mbps",
-      internationalspeed: "5Mbps",
-      equipment: "Trang bị modem wifi 6",
-      suitability: "Phù hợp công ty 15 - 30 người",
-      subscription: "6 tháng + 0 va 12 tháng +1",
-      installationFee: "Phí lắp đặt 300.000Đ",
-      contact: "0818.122.111",
-    },
-    {
-      name: "FIBER S3",
-      price1: "814.000đ",
-      downloadSpeed: "1000Mbps",
-      internationalspeed: "8Mbps",
-      equipment: "Trang bị modem wifi 6",
-      suitability: "Phù hợp công ty 50 - 100 người",
-      subscription: "6 tháng + 0 va 12 tháng +1",
-      installationFee: "Phí lắp đặt 300.000Đ",
-      contact: "0818.122.111",
-    },
-  ];
-
   const ProductCard: React.FC<{ product: Product; index: number }> = ({
     product,
     index,
@@ -234,53 +154,51 @@ const ProductList: React.FC = () => {
 
       {/* Product Info */}
       <div className="pt-14 sm:pt-16 md:pt-20 px-4 sm:px-6 pb-6 text-center">
-        <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-900 mb-3 sm:mb-4 md:mb-5">
+        <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-900 mb-2">
           {product.name}
         </h3>
-        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-1 sm:mb-2">
+        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-1">
           {product.price1}{" "}
-          <span className="text-black text-xs sm:text-sm">
-            {product.price2 ? "(huyện)" : ""}
-          </span>
+          <span className="text-black text-xs sm:text-sm">(quận)</span>
         </p>
         {product.price2 && (
-          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-2 sm:mb-3 md:mb-4">
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-red-500 mb-2">
             {product.price2}{" "}
-            <span className="text-black text-xs sm:text-sm">(quận)</span>
+            <span className="text-black text-xs sm:text-sm">(huyện)</span>
           </p>
         )}
-        <ul className="space-y-1 sm:space-y-2 text-gray-700 text-xs sm:text-sm md:text-base">
+        <ul className="list-none space-y-1 sm:space-y-2 text-gray-700 text-xs sm:text-sm md:text-base text-center">
           <li className="flex items-center justify-center">
-            <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
-            Download tối đa {product.downloadSpeed}
+            <span className="text-blue-600 min-w-[1.5em] mr-2 sm:mr-3" style={{ fontSize: '0.75em' }}>◆</span>
+            <span className="whitespace-nowrap"> {product.downloadspeed}</span>
           </li>
-          {product.uploadSpeed && (
+          {product.uploadspeed && (
             <li className="flex items-center justify-center">
-              <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
-              Tốc độ upload {product.uploadSpeed}
+              <span className="text-blue-600 min-w-[1.5em] mr-2 sm:mr-3" style={{ fontSize: '0.75em' }}>◆</span>
+              <span className="whitespace-nowrap"> {product.uploadspeed}</span>
             </li>
           )}
           {product.internationalspeed && (
             <li className="flex items-center justify-center">
-              <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
-              Băng thông quốc tế {product.internationalspeed}
+              <span className="text-blue-600 min-w-[1.5em] mr-2 sm:mr-3" style={{ fontSize: '0.75em' }}>◆</span>
+              <span className="whitespace-nowrap"> {product.internationalspeed}</span>
             </li>
           )}
           <li className="flex items-center justify-center">
-            <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
+            <span className="text-blue-600 mr-1 sm:mr-2" style={{ fontSize: '0.75em' }}>◆</span>
             {product.equipment}
           </li>
           <li className="flex items-center justify-center">
-            <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
+            <span className="text-blue-600 mr-1 sm:mr-2" style={{ fontSize: '0.75em' }}>◆</span>
             {product.suitability}
           </li>
           <li className="flex items-center justify-center">
-            <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
+            <span className="text-blue-600 mr-1 sm:mr-2" style={{ fontSize: '0.75em' }}>◆</span>
             {product.subscription}
           </li>
           <li className="flex items-center justify-center">
-            <span className="text-blue-600 mr-1 sm:mr-2">◆</span>
-            {product.installationFee}
+            <span className="text-blue-600 mr-1 sm:mr-2" style={{ fontSize: '0.75em' }}>◆</span>
+            {product.installationfee}
           </li>
         </ul>
       </div>
@@ -498,11 +416,23 @@ const ProductList: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
-          {products1.map((product, index) => (
-            <ProductCard key={index} product={product} index={index} />
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-center text-gray-600">Đang tải sản phẩm...</p>
+        ) : error ? (
+          <p className="text-center text-red-600">{error}</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
+            {internetProducts.length === 0 ? (
+              <p className="text-center text-gray-600 col-span-full">
+                Không có sản phẩm nào trong danh mục này.
+              </p>
+            ) : (
+              internetProducts.map((product, index) => (
+                <ProductCard key={index} product={product} index={index} />
+              ))
+            )}
+          </div>
+        )}
 
         {/* Promotional Note */}
         <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center px-4 sm:px-6 md:px-8 mt-4 sm:mt-6 max-w-4xl mx-auto">
@@ -533,11 +463,23 @@ const ProductList: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
-          {products2.map((product, index) => (
-            <ProductCard key={index} product={product} index={index} />
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-center text-gray-600">Đang tải sản phẩm...</p>
+        ) : error ? (
+          <p className="text-center text-red-600">{error}</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
+            {comboProducts.length === 0 ? (
+              <p className="text-center text-gray-600 col-span-full">
+                Không có sản phẩm nào trong danh mục này.
+              </p>
+            ) : (
+              comboProducts.map((product, index) => (
+                <ProductCard key={index} product={product} index={index} />
+              ))
+            )}
+          </div>
+        )}
 
         {/* Promotional Note */}
         <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center px-4 sm:px-6 md:px-8 mt-4 sm:mt-6 max-w-4xl mx-auto">
@@ -568,11 +510,23 @@ const ProductList: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
-          {products3.map((product, index) => (
-            <ProductCard key={index} product={product} index={index} />
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-center text-gray-600">Đang tải sản phẩm...</p>
+        ) : error ? (
+          <p className="text-center text-red-600">{error}</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
+            {companyProducts.length === 0 ? (
+              <p className="text-center text-gray-600 col-span-full">
+                Không có sản phẩm nào trong danh mục này.
+              </p>
+            ) : (
+              companyProducts.map((product, index) => (
+                <ProductCard key={index} product={product} index={index} />
+              ))
+            )}
+          </div>
+        )}
 
         {/* Banner 3 */}
         <div className="banner w-full py-3 sm:py-4 md:py-5">
