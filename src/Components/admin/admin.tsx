@@ -29,10 +29,9 @@ interface User {
 const categories: Product["category"][] = ["Internet", "Combo InternetTV", "CompanyInternet"];
 const filterOptions: (Product["category"] | "All")[] = ["All", ...categories];
 
-const Admin: React.FC = () => {
+const Admin = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(null);
   const [newProduct, setNewProduct] = useState<Partial<Product>>({
     name: "",
     price1: "",
@@ -57,17 +56,6 @@ const Admin: React.FC = () => {
     userId: null,
     userEmail: null,
   });
-
-  // Fetch current user email
-  const fetchCurrentUser = async () => {
-    const { data: { user }, error } = await supabase.auth.getUser();
-    if (error) {
-      console.error("Error fetching current user:", error);
-      alert("Không thể lấy thông tin người dùng hiện tại");
-    } else {
-      setCurrentUserEmail(user?.email || null);
-    }
-  };
 
   // Fetch products
   const fetchProducts = async () => {
@@ -224,14 +212,13 @@ const Admin: React.FC = () => {
   useEffect(() => {
     fetchProducts();
     fetchUsers();
-    fetchCurrentUser();
   }, []);
 
   return (
     <>
       <HeaderBanner />
       <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Quản lý sản phẩm</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Quản trị</h1>
 
         {/* Create Form */}
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
